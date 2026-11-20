@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f766e">
+  <title>¡Qué gusto verte! | Mi primera página</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      padding: 24px;
+      display: grid;
+      place-items: center;
+      font-family: system-ui, sans-serif;
+      color: #173b3a;
+      background: radial-gradient(circle at top left, #d9f4e8, transparent 40%), #f3faf7;
+    }
+    main {
+      width: min(100%, 760px);
+      padding: clamp(28px, 7vw, 64px);
+      text-align: center;
+      background: white;
+      border: 1px solid #e1eee8;
+      border-radius: 28px;
+      box-shadow: 0 24px 70px #174b3a18;
+    }
+    .emoji { font-size: 3rem; }
+    h1 { margin: 12px 0; font-size: clamp(2.2rem, 7vw, 4rem); line-height: 1.08; }
+    .intro { max-width: 540px; margin: 0 auto; color: #54706a; font-size: 1.1rem; line-height: 1.7; }
+    .buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 30px; }
+    button { padding: 13px 20px; border: 0; border-radius: 999px; font: inherit; font-weight: 700; cursor: pointer; transition: transform .18s ease; }
+    button:hover { transform: translateY(-2px); }
+    button:focus-visible { outline: 3px solid #f4a261; outline-offset: 3px; }
+    .primary { color: white; background: #0f766e; }
+    .secondary { color: #0f625c; background: #e4f4ed; }
+    #mensaje { min-height: 1.7em; margin: 22px 0 0; color: #0f766e; font-weight: 650; }
+    footer { margin-top: 36px; color: #79918a; font-size: .9rem; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="emoji" id="emoji" aria-hidden="true">👋</div>
+    <h1>¡Qué gusto verte!</h1>
+    <p class="intro">Esta es mi primera página web: un espacio creado con curiosidad, ganas de aprender y mucho corazón. ¡Pásale!</p>
+    <div class="buttons">
+      <button class="primary" id="saludar" type="button">¡Salúdame!</button>
+      <button class="secondary" id="sorpresa" type="button">Dame una sorpresa ✨</button>
+      <button class="secondary" id="tema" type="button" aria-pressed="false">Cambiar colores 🎨</button>
+    </div>
+    <p id="mensaje" role="status" aria-live="polite"></p>
+    <footer>Hecho con cariño en México 🇲🇽</footer>
+  </main>
+  <script>
+    const mensaje = document.querySelector('#mensaje');
+    const saludos = ['¡Hola! Qué bueno que estás aquí 😊', '¡Saludos! Gracias por visitar mi página 👋', '¡Qué onda! Espero que te guste este espacio 😄'];
+    const sorpresas = ['Dato curioso: la vaquita marina es el mamífero marino más pequeño del mundo. 🐬', '¡Puedes aprender algo nuevo todos los días! 🌱', 'La palabra “chocolate” viene del náhuatl. 🍫'];
+    let saludo = 0;
+    let sorpresa = 0;
+
+    document.querySelector('#saludar').addEventListener('click', () => {
+      mensaje.textContent = saludos[saludo++ % saludos.length];
+    });
+    document.querySelector('#sorpresa').addEventListener('click', () => {
+      mensaje.textContent = sorpresas[sorpresa++ % sorpresas.length];
+    });
+    document.querySelector('#tema').addEventListener('click', (evento) => {
+      const boton = evento.currentTarget;
+      const activo = boton.getAttribute('aria-pressed') !== 'true';
+      boton.setAttribute('aria-pressed', String(activo));
+      document.querySelector('.primary').style.backgroundColor = activo ? '#a04478' : '#0f766e';
+      document.querySelector('#emoji').textContent = activo ? '🌈' : '👋';
+      mensaje.textContent = activo ? '¡Nuevo estilo, misma buena vibra! 🎉' : 'Volvimos a los colores originales.';
+    });
+  </script>
+</body>
+</html>
